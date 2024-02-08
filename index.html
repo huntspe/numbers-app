@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numbers-App</title>
+</head>
+<body>
+    <h1> Arithmetic </h1>
+    <input id="fir"/>
+    <label>+</label>
+    <input id="sec"/> 
+    <button onclick="add()">=</button>
+    <label id = "sum"></label>
+    
+    <script>
+        async function add() {
+            let op1 = document.getElementById("fir");
+            let op2 = document.getElementById("sec");
+            let n = op1.value;
+            let m = op2.value;
+            const response = await fetch("http://localhost:3000/add/" + n + "/" + m);
+
+            const sum = await response.json();
+            document.getElementById("sum").innerText = sum;     
+        }
+    </script>
+</body>
+
+</html>
