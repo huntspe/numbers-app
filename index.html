@@ -1,30 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numbers-App</title>
+    <title>HTML Calculator</title>
+    <!-- For styling -->
+    <style>
+        table {
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="button"] {
+            width: 100%;
+            padding: 20px 40px;
+            background-color: green;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            padding: 20px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            border: 2px solid black;
+        }
+    </style>
 </head>
 <body>
-    <h1> Arithmetic </h1>
-    <input id="fir"/>
-    <label>+</label>
-    <input id="sec"/> 
-    <button onclick="add()">=</button>
-    <label id = "sum"></label>
-    
+    <!-- Create table -->
+    <table id="calcu">
+        <tr>
+            <td colspan="4">
+                <input type="text" id="result">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="1" onclick="appendToResult('1')"></td>
+            <td><input type="button" value="2" onclick="appendToResult('2')"></td>
+            <td><input type="button" value="3" onclick="appendToResult('3')"></td>
+            <td><input type="button" value="/" onclick="appendToResult('/')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="4" onclick="appendToResult('4')"></td>
+            <td><input type="button" value="5" onclick="appendToResult('5')"></td>
+            <td><input type="button" value="6" onclick="appendToResult('6')"></td>
+            <td><input type="button" value="*" onclick="appendToResult('*')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="7" onclick="appendToResult('7')"></td>
+            <td><input type="button" value="8" onclick="appendToResult('8')"></td>
+            <td><input type="button" value="9" onclick="appendToResult('9')"></td>
+            <td><input type="button" value="-" onclick="appendToResult('-')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="0" onclick="appendToResult('0')"></td>
+            <td><input type="button" value="." onclick="appendToResult('.')"></td>
+            <td><input type="button" value="=" onclick="calculate()"></td>
+            <td><input type="button" value="+" onclick="appendToResult('+')"></td>
+        </tr>
+    </table>
     <script>
-        async function add() {
-            let op1 = document.getElementById("fir");
-            let op2 = document.getElementById("sec");
-            let n = op1.value;
-            let m = op2.value;
-            const response = await fetch("https://arithmetic-service-huspence.onrender.com/add/" + n + "/" + m);
+        let result = document.getElementById("result");
 
-            const sum = await response.json();
-            document.getElementById("sum").innerText = sum;     
+        function appendToResult(value) {
+            result.value += value;
+        }
+
+        async function calculate() {
+            const expression = result.value;
+            const response = await fetch("https://arithmetic-service-huspence.onrender.com/eval/" + expression);
+            const resultValue = await response.json();
+            result.value = resultValue;
         }
     </script>
 </body>
-
 </html>
