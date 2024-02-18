@@ -63,12 +63,19 @@
             <td><input type="button" value="=" onclick="calculate()"></td>
             <td><input type="button" value="+" onclick="appendToResult('+')"></td>
         </tr>
+        <tr>
+            <td colspan="4"><input type="button" value="C" onclick="clearResult()"></td>
+        </tr>
     </table>
     <script>
         let result = document.getElementById("result");
 
         function appendToResult(value) {
             result.value += value;
+        }
+
+        function clearResult() {
+            result.value = "";
         }
 
         async function calculate() {
